@@ -35,6 +35,7 @@ Below is what a sample log data file looks like:
 ![log_data](image/log-data.png)
 
 ### Schema for song play analysis
+![schema](image/Song_ERD.png)
 To create a star schema optimized for queries on song play analysis, which includes the following tables:
 
 - Fact Table
