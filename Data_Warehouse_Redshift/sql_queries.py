@@ -58,10 +58,10 @@ staging_songs_table_create = ("""
         artist_location  VARCHAR
     )
 """)
-
+# Redshift dies not enforce primary key constraints - specify NOT NULL
 songplay_table_create = ("""
     CREATE TABLE IF NOT EXISTS songplays (
-        songplay_id      INTEGER IDENTITY(0,1) PRIMARY KEY sortkey,
+        songplay_id      INTEGER IDENTITY(0,1) NOT NULL PRIMARY KEY sortkey,
         start_time       TIMESTAMP,
         user_id          INTEGER,
         level            VARCHAR,
@@ -75,7 +75,7 @@ songplay_table_create = ("""
 
 user_table_create = ("""
     CREATE TABLE IF NOT EXISTS users (
-        user_id          INTEGER PRIMARY KEY distkey,
+        user_id          INTEGER NOT NULL PRIMARY KEY distkey,
         first_name       VARCHAR,
         last_name        VARCHAR,
         gender           VARCHAR,
@@ -85,7 +85,7 @@ user_table_create = ("""
 
 song_table_create = ("""
     CREATE TABLE IF NOT EXISTS songs (
-        song_id          VARCHAR PRIMARY KEY,
+        song_id          VARCHAR NOT NULL PRIMARY KEY,
         title            VARCHAR,
         artist_id        VARCHAR,
         year             INTEGER,
@@ -95,7 +95,7 @@ song_table_create = ("""
 
 artist_table_create = ("""
     CREATE TABLE IF NOT EXISTS artists (
-        artist_id        VARCHAR PRIMARY KEY distkey,
+        artist_id        VARCHAR NOT NULL PRIMARY KEY distkey,
         name             VARCHAR,
         location         VARCHAR,
         latitude         FLOAT,
@@ -105,7 +105,7 @@ artist_table_create = ("""
 
 time_table_create = ("""
     CREATE TABLE IF NOT EXISTS time (
-        start_time       TIMESTAMP PRIMARY KEY sortkey distkey,
+        start_time       TIMESTAMP NOT NULL PRIMARY KEY sortkey distkey,
         hour             INTEGER,
         day              INTEGER,
         week             INTEGER,
@@ -116,7 +116,7 @@ time_table_create = ("""
 """)
 
 
-# STAGING TABLES
+# STAGING TABLES - best to keep staging tables exact copies of the raw data
 staging_events_copy = ("""
     COPY staging_events FROM {}
     CREDENTIALS 'aws_iam_role={}'
@@ -146,7 +146,7 @@ songplay_table_insert = ("""
                     se.sessionid AS session_id,
                     se.location AS location,
                     se.useragent AS user_agent
-    FROM staging_events se 
+    FROM staging_events se
     JOIN staging_songs ss ON se.song = ss.title AND se.artist = ss.artist_name
 """)
 
