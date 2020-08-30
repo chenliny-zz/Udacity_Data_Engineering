@@ -13,7 +13,7 @@ class StageToRedshiftOperator(BaseOperator):
         ACCESS_KEY_ID '{}'
         SECRET_ACCESS_KEY '{}'
         REGION 'us-west-2'
-        JSON 'auto'
+        JSON '{}'
         COMPUPDATE OFF
     """
     
@@ -27,9 +27,10 @@ class StageToRedshiftOperator(BaseOperator):
                  table='',
                  s3_bucket='',
                  s3_key='',
-                 region = '',
+                 region ='',
                  delimiter=",",
                  ignore_headers=1,
+                 json_path='',
                  *args, **kwargs):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
@@ -41,6 +42,7 @@ class StageToRedshiftOperator(BaseOperator):
         self.s3_key = s3_key
         self.delimiter = delimiter
         self.ignore_headers = ignore_headers
+        self.json_path = json_path
                 
     def execute(self, context):
         aws_hook = AwsHook(self.aws_credentials_id)
@@ -52,13 +54,13 @@ class StageToRedshiftOperator(BaseOperator):
         
         self.log.info('Copying data from S3 to Redhift')
         s3_path = 's3://{}/{}'.format(self.s3_bucket, self.s3_key.format(**context))
-        json_path = 's3://udacity-dend/log_json_path.json'
         
         formatted_sql = StageToRedshiftOperator.copy_sql.format(
             self.table,
             s3_path,
             credentials.access_key,
-            credentials.secret_key
+            credentials.secret_key,
+            self.json_path
         )
         
         redshift.run(formatted_sql)
