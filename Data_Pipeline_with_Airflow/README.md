@@ -9,7 +9,7 @@ The objective of this project is to create high grade data pipelines that are **
 - link tasks to create create a coherent and sensible data flow within the pipeline
 
 The source data **resides in S3** and needs to be processed in Sparkify's data warehouse in **Amazon Redshift**. The source datasets consist of JSON logs that tell about user activity in the application and JSON metadata about the songs the users listen to.
-![sample_dag](image/example_dag.png)
+![sample_dag](images/example_dag.png)
 
 ### Project datasets
 Datasets in this project resides in S3. Here are the S3 links for each:
