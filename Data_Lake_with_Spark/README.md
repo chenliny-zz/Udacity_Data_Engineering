@@ -4,7 +4,7 @@
 ### Description
 A music streaming startup, Sparkify, has grown their user base and song database even more and want to move their data warehouse to a data lake. Their data resides in S3, in a directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app.
 
-The objective of this project is to **build an ETL pipeline for a data lake hosted on S3** that **extracts data from S3, processes them using Spark, and loads them back into S3** as a set of dimensional tables. The Spark process will be deployed on a cluster using AWS. This will allow the analytics team to continue finding insights in what songs their users are listening to.
+The objective of this project is to **build an ETL pipeline for a data lake** that **extracts data from S3, processes them using Spark, and loads them back into S3** as a set of dimensional tables. The Spark process will be deployed on a cluster using AWS. This will allow the analytics team to continue finding insights in what songs their users are listening to.
 
 ### Project datasets
 Datasets in this project resides in S3. Here are the S3 links for each:
